@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:a="clr-namespace:UbiSGBD"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui;assembly=CommunityToolkit.Maui"
+             xmlns:views="clr-namespace:UbiSGBD.Pages.Views"
+             xmlns:pages="clr-namespace:UbiSGBD.Pages"
+             x:Class="UbiSGBD.Pages.ConnectionPage"
+             Title="UBI - SGBD - Configuração"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <pages:ConnectionViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="100,*" RowSpacing="24"
+          ColumnDefinitions="*"
+          Margin="24,0,24,0">
+
+        <!-- left column -->
+        <VerticalStackLayout Margin="0,24,24,0">
+            <Label Text="Controlo de Transações" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+            <BoxView Style="{StaticResource HRule}" Margin="0,24,0,0"/>
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1" Margin="0,24,24,24">
+
+
+            <Border Background="{StaticResource DarkBg2Brush}"
+                    Stroke="{StaticResource DarkBg2Brush}"
+                    StrokeThickness="1"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="8" >
+                    <Grid x:Name="grid02" Margin="24">
+                        <Label Text="Dados da conexão" VerticalOptions="Center"  TextColor="{StaticResource Primary}"/>
+                    </Grid>
+
+                    <BoxView Style="{StaticResource HRule}"/>
+                    <ScrollView>
+                        <Grid Margin="24,8" RowSpacing="24"
+                                ColumnDefinitions="450,*">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label Text="Configurações da aplicação Geral" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+
+                            <Label Text="Host Name:" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                            <Label Text="Database Name:" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+                            <Label Text="Username:" Grid.Row="3" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Password:" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Isolation level:" Grid.Row="5" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Tempo de atualização:" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center" />
+
+
+                            <Entry Placeholder="Insira o Host Name" Text="{Binding Connection.HostName}" Grid.Row="1" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Database Name" Text="{Binding Connection.DatabaseName}" Grid.Row="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Username" Text="{Binding Connection.Username}" Grid.Row="3" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Password" Text="{Binding Connection.Password}" IsPassword="True" Grid.Row="4" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Picker x:Name="isolationLEvelPicker" SelectedItem="{Binding Connection.IsolationLevel}"  Grid.Row="5" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+                            <Entry Placeholder="Tempo em milissegundos" Text="{Binding Connection.Milissegundos}" Grid.Row="6" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Button Text="Testar conexão" HorizontalOptions="End" VerticalOptions="Center"
+                                Command="{Binding TestConnectionCommand}"/>
+                        </Grid>
+                    </ScrollView>
+                    <BoxView Style="{StaticResource HRule}"/>
+                    <ScrollView>
+                        <Grid Margin="24,8" RowSpacing="24"
+                                ColumnDefinitions="450,*">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label Text="Configurações da aplicação Brower" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+
+
+                            <Label Text="Host Name:" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                            <Label Text="Database Name:" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+                            <Label Text="Username:" Grid.Row="3" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Password:" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Isolation level:" Grid.Row="5" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Tempo de atualização:" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center" />
+
+
+                            <Entry Placeholder="Insira o Host Name" Text="{Binding ConnectionBrower.HostName}" Grid.Row="1" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Database Name" Text="{Binding ConnectionBrower.DatabaseName}" Grid.Row="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Username" Text="{Binding ConnectionBrower.Username}" Grid.Row="3" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Password" Text="{Binding ConnectionBrower.Password}" IsPassword="True" Grid.Row="4" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Picker x:Name="isolationLEvelBrowerPicker" SelectedItem="{Binding ConnectionBrower.IsolationLevel}"  Grid.Row="5" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+                            <Entry Placeholder="Tempo em milissegundos" Text="{Binding ConnectionBrower.Milissegundos}" Grid.Row="6" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Button Text="Testar conexão" HorizontalOptions="End" VerticalOptions="Center"
+                                Command="{Binding TestConnectionBrowerCommand}"/>
+                        </Grid>
+
+                    </ScrollView>
+                    <BoxView Style="{StaticResource HRule}"/>
+                    <ScrollView>
+                        <Grid Margin="24,8" RowSpacing="24" ColumnDefinitions="450,*">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label Text="Configurações da aplicação Log" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+
+
+                            <Label Text="Host Name:" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                            <Label Text="Database Name:" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+                            <Label Text="Username:" Grid.Row="3" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Password:" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Isolation level:" Grid.Row="5" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Label Text="Tempo de atualização:" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="Center" />
+
+
+                            <Entry Placeholder="Insira o Host Name" Text="{Binding ConnectionLog.HostName}" Grid.Row="1" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Database Name" Text="{Binding ConnectionLog.DatabaseName}" Grid.Row="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Username" Text="{Binding ConnectionLog.Username}" Grid.Row="3" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Entry Placeholder="Insira o Password" Text="{Binding ConnectionLog.Password}" IsPassword="True" Grid.Row="4" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Picker x:Name="isolationLEvelLogPicker" SelectedItem="{Binding ConnectionLog.IsolationLevel}"  Grid.Row="5" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+                            <Entry Placeholder="Tempo em milissegundos" Text="{Binding ConnectionLog.Milissegundos}" Grid.Row="6" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                            <Button Text="Testar conexão" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding TestConnectionLogCommand}"/>
+                        </Grid>
+
+                    </ScrollView>
+                </VerticalStackLayout>
+            </Border>
+        </ScrollView>
+    </Grid>
+</ContentPage>
+

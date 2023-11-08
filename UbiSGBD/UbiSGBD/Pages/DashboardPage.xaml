@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:a="clr-namespace:UbiSGBD"
+                          xmlns:v="clr-namespace:UbiSGBD.Pages.Views"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:views="clr-namespace:UbiSGBD.Pages.Views"
+             xmlns:pages="clr-namespace:UbiSGBD.Pages"
+             x:Class="UbiSGBD.Pages.DashboardPage"
+             x:DataType="pages:DashboardViewModel"
+             xmlns:m="clr-namespace:UbiSGBD.Models"
+             Title="UBI - SGBD - Encomendas"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <pages:DashboardViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="100,*" RowSpacing="24"
+          ColumnDefinitions="*,400"
+          Margin="24,0,24,0">
+
+        <!-- left column -->
+        <VerticalStackLayout Margin="0,24,24,0">
+            <Label Text="Controlo de Transações" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+            <BoxView Style="{StaticResource HRule}" Margin="0,24,0,0"/>
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1" Margin="0,24,24,24">
+            <Grid RowDefinitions="*" RowSpacing="24"
+                  ColumnDefinitions="*" ColumnSpacing="24">
+
+                <!-- Orders list -->
+                <Border
+                    Background="{StaticResource DarkBg2Brush}"
+                    Stroke="{StaticResource DarkBg2Brush}"
+                    StrokeThickness="1"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Style="{StaticResource DarkBorderView}">
+
+                    <Grid Margin="24" RowDefinitions="40,*">
+                        <Grid x:Name="grid02" Margin="0" ColumnDefinitions="65*,15*,20*">
+                            <Label Text="Dados da conexão" Grid.Column="0" VerticalOptions="Center"  TextColor="{StaticResource Primary}"/>
+                            <Button Text="Refresh" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center"
+                                Command="{Binding ViewAllCommand}"/>
+                            <Button x:Name="btnBackgroundservice" Text="{Binding TextBackgroundService}" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center"
+                                Command="{Binding EnableBackgroundServiceCommand}"/>
+                        </Grid>
+
+                        <ScrollView Grid.Row="1" >
+                            <VerticalStackLayout >
+                                <Grid ColumnDefinitions="10*,10*,30*,40*,10*" RowDefinitions="30,*">
+
+                                    <Label Text="EncId" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="ClienteID" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="Nome" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="Morada" Grid.Column="3" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="" Grid.Column="4" HorizontalOptions="Start" VerticalOptions="Center"  />
+
+                                    <BoxView Style="{StaticResource HRule}" Margin="0,30,0,0" Grid.ColumnSpan="5"/>
+
+                                </Grid>
+                            </VerticalStackLayout>
+                        </ScrollView>
+
+
+                        <ScrollView Grid.Row="3" Margin="0,30,0,0">
+                            <VerticalStackLayout Spacing="16" Margin="0,30,0,0"
+                                                 BindableLayout.ItemsSource="{Binding Orders.Items}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="m:Order">
+
+                                        <Grid Margin="5,0,0,0" ColumnDefinitions="10*,10*,30*,40*,10*" RowDefinitions="*">
+                                            <Label Text="{Binding EncId}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding ClienteID}" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding Nome}" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding Morada}" Grid.Column="3" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Button Text="Edit" Grid.Column="4" HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding SelectOrderCommand}" CommandParameter="{Binding EncId}"  />
+                                        </Grid>
+
+                                    </DataTemplate>
+
+
+
+                                </BindableLayout.ItemTemplate>
+
+                            </VerticalStackLayout>
+
+                        </ScrollView>
+
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+        </ScrollView>
+
+        <v:OrderCartView Grid.Column="1" Grid.RowSpan="3"/>
+
+    </Grid>
+
+</ContentPage>
+

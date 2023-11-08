@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:views="clr-namespace:UbiSGBD.Pages.Views"
+             xmlns:m="clr-namespace:UbiSGBD.Models"
+             x:DataType="views:OrderCartViewModel"
+             x:Class="UbiSGBD.Pages.Views.OrderCartView"
+             Background="{StaticResource DarkBg2Brush}">
+
+    <ContentView.BindingContext>
+        <views:OrderCartViewModel/>
+    </ContentView.BindingContext>
+
+    <Grid RowDefinitions="*,108,108">
+        <ScrollView>
+            <VerticalStackLayout Margin="24" Spacing="20">
+                <Label 
+                    Text="Nova encomenda"
+                    Style="{StaticResource Title1}" />
+                <HorizontalStackLayout Spacing="12">
+
+
+                    <Grid Margin="0,8" RowSpacing="24"
+                                ColumnDefinitions="350,*">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Label Text="Client ID:" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center"  />
+                        <Label Text="Nome:" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                        <Label Text="Morada:" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center" />
+
+
+                        <Entry Placeholder="Insira o Client ID" Text="{Binding Order.ClienteID}" Grid.Row="0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Numeric" />
+                        <Entry Placeholder="Insira o Nome do client" Text="{Binding Order.Nome}" Grid.Row="1" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+                        <Entry Placeholder="Insira o Morada" Text="{Binding Order.Morada}" Grid.Row="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" />
+
+                    </Grid>
+
+
+                </HorizontalStackLayout>
+
+                <Grid ColumnDefinitions="20*,30*,30*,20*">
+                    <Label Text="Id" Style="{StaticResource Headline}" Grid.Column="0"/>
+                    <Label Text="Designação" Style="{StaticResource Headline}" Grid.Column="1"/>
+                    <Label Text="Quantidade" Style="{StaticResource Headline}" Grid.Column="2"/>
+                    <Label Text="Preço" Style="{StaticResource Headline}" Grid.Column="3"/>
+                </Grid>
+                <BoxView Style="{StaticResource HRule}"/>
+
+                <VerticalStackLayout Spacing="12"
+                                     BindableLayout.ItemsSource="{Binding Order.Items}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="m:Item">
+                            <Grid ColumnDefinitions="20*,30*,30*,20*">
+                                <Border
+                                    Grid.Column="0"
+                                    WidthRequest="44"
+                                    Background="{StaticResource DarkBg1Brush}"
+                                    Stroke="{StaticResource SecondaryBrush}"
+                                    StrokeThickness="1">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry Text="{Binding ProdutoId}"
+                                           MaxLength="2"
+                                           WidthRequest="44"
+                                           HorizontalOptions="Start"
+                                           HorizontalTextAlignment="Start"
+                                           Keyboard="Numeric"
+                                           Background="Transparent" TextColor="White"
+                                           VerticalOptions="Center"
+                                    />
+                                </Border>
+                                <Border
+                                    Grid.Column="1"
+                                    WidthRequest="100"
+                                    Background="{StaticResource DarkBg1Brush}"
+                                    Stroke="{StaticResource SecondaryBrush}"
+                                    StrokeThickness="1">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry Text="{Binding Designacao}"
+                                           MaxLength="50"
+                                           WidthRequest="100"
+                                           HorizontalOptions="Start"
+                                           HorizontalTextAlignment="Start"
+                                           Keyboard="Default"
+                                           Background="Transparent" TextColor="White"
+                                           VerticalOptions="Center"
+                                    />
+                                </Border>
+
+                                <Border
+                                    Grid.Column="2"
+                                    HeightRequest="44"
+                                    WidthRequest="44"
+                                    Background="{StaticResource DarkBg1Brush}"
+                                    Stroke="{StaticResource SecondaryBrush}"
+                                    StrokeThickness="1">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry Text="{Binding Quantidade}"
+                                           MaxLength="3"
+                                           WidthRequest="44"
+                                           HorizontalTextAlignment="Start"
+                                           Keyboard="Numeric"
+                                           Background="Transparent" TextColor="White"
+                                           HorizontalOptions="Center" VerticalOptions="Center"
+                                    />
+                                </Border>
+                                <Border
+                                    Grid.Column="3"
+                                    HeightRequest="44"
+                                    WidthRequest="60"
+                                    Background="{StaticResource DarkBg1Brush}"
+                                    Stroke="{StaticResource SecondaryBrush}"
+                                    StrokeThickness="1">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry Text="{Binding Preco}"
+                                           MaxLength="5"
+                                           WidthRequest="44"
+                                           HorizontalTextAlignment="Start"
+                                           Keyboard="Numeric"
+                                           Background="Transparent" TextColor="White"
+                                           HorizontalOptions="Center" VerticalOptions="Center"
+                                    />
+                                </Border>
+
+                            </Grid>
+                        </DataTemplate>
+
+                    </BindableLayout.ItemTemplate>
+
+
+
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+        <Grid ColumnDefinitions="50*,50*" Grid.Row="1">
+            <Button Text="Nova linha" HorizontalOptions="Fill" Margin="24" Grid.Row="2" Grid.Column="0" IsVisible="{Binding IsSaveEnable}"
+            Command="{Binding AddNewItemCommand}"/>
+
+            <Button Text="Limpar" HorizontalOptions="Fill" Margin="24" Grid.Row="2" Grid.Column="1" IsVisible="{Binding IsSaveEnable}"
+                    Command="{Binding CleanCommand}"/>
+        </Grid>
+
+        <Grid ColumnDefinitions="100*" Grid.Row="2">
+            <Button Text="Salvar" HorizontalOptions="Fill" Margin="24" IsVisible="{Binding IsSaveEnable}"
+                Command="{Binding SaveCommand}"/>
+        </Grid>
+
+        <Grid ColumnDefinitions="50*,50*" Grid.Row="3">
+            <Button Text="Rollback" IsVisible="{Binding IsTransactionOpen}" HorizontalOptions="Fill" Margin="24" Grid.Row="3" Grid.Column="0"
+                Command="{Binding RollbackCommand}"/>
+
+            <Button Text="Commit" IsVisible="{Binding IsTransactionOpen}" HorizontalOptions="Fill" Margin="24" Grid.Row="3" Grid.Column="1"
+                Command="{Binding CommitCommand}"/>
+        </Grid>
+    </Grid>
+</ContentView>
+

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:a="clr-namespace:UbiSGBD"
+             xmlns:v="clr-namespace:UbiSGBD.Pages.Views"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:views="clr-namespace:UbiSGBD.Pages.Views"
+             xmlns:pages="clr-namespace:UbiSGBD.Pages"
+             x:Class="UbiSGBD.Pages.LogPage"
+             x:DataType="pages:LogViewModel"
+             xmlns:m="clr-namespace:UbiSGBD.Models"
+             Title="UBI - SGBD - Logs"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <pages:LogViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="100,50*,50*" RowSpacing="24"
+          ColumnDefinitions="*"
+          Margin="24,0,24,0">
+
+        <!-- left column -->
+        <VerticalStackLayout Margin="0,24,24,0">
+            <Label Text="Controlo de Transações" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+            <BoxView Style="{StaticResource HRule}" Margin="0,24,0,0"/>
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1" Margin="0,24,24,24">
+            <Grid RowDefinitions="*" RowSpacing="24" ColumnDefinitions="*" ColumnSpacing="24">
+
+                <!-- Orders list -->
+                <Border
+            Background="{StaticResource DarkBg2Brush}"
+            Stroke="{StaticResource DarkBg2Brush}"
+            StrokeThickness="1"
+            Grid.Row="1"
+            Grid.Column="1"
+            Style="{StaticResource DarkBorderView}">
+
+                    <Grid Margin="24" RowDefinitions="40,*">
+                        <Grid Margin="0" ColumnDefinitions="65*,15*,20*">
+                            <Label Text="Log Tempo" Grid.Column="0" VerticalOptions="Center"  TextColor="{StaticResource Primary}"/>
+                            <Button x:Name="btnLogTempoAll" Text="Refresh" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding ViewAllLogTempoCommand}"/>
+                            <Button x:Name="btnLogTempo" Text="{Binding TextBackgroundServiceLogTempo}" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding EnableBackgroundServiceLogTempoCommand}"/>
+                        </Grid>
+
+                        <ScrollView Grid.Row="1" >
+                            <VerticalStackLayout >
+                                <Grid ColumnDefinitions="30*,30*,40*" RowDefinitions="30,*">
+
+                                    <Label Text="UserId" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="EncId" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="Tempo" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+
+                                    <BoxView Style="{StaticResource HRule}" Margin="0,30,0,0" Grid.ColumnSpan="5"/>
+
+                                </Grid>
+                            </VerticalStackLayout>
+                        </ScrollView>
+
+
+                        <ScrollView Grid.Row="3" Margin="0,30,0,0">
+                            <VerticalStackLayout Spacing="16" Margin="0,30,0,0"
+                                 BindableLayout.ItemsSource="{Binding LogList.ItemsLogTempo}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="m:LogTempo">
+
+                                        <Grid Margin="5,0,0,0" ColumnDefinitions="30*,30*,40*" RowDefinitions="*">
+                                            <Label Text="{Binding UserId}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding EncId}" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding Tempo}" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                        </Grid>
+
+                                    </DataTemplate>
+
+
+
+                                </BindableLayout.ItemTemplate>
+
+                            </VerticalStackLayout>
+
+                        </ScrollView>
+
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+        </ScrollView>
+
+
+        <ScrollView Grid.Row="2" Margin="0,24,24,24">
+            <Grid RowDefinitions="*" RowSpacing="24"
+                  ColumnDefinitions="*" ColumnSpacing="24">
+
+                <!-- Orders list -->
+                <Border
+                    Background="{StaticResource DarkBg2Brush}"
+                    Stroke="{StaticResource DarkBg2Brush}"
+                    StrokeThickness="1"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Style="{StaticResource DarkBorderView}">
+
+                    <Grid Margin="24" RowDefinitions="40,*">
+                        <Grid Margin="0" ColumnDefinitions="45*,20*,15*,20*">
+                            <Label Text="Log" Grid.Column="0" VerticalOptions="Center"  TextColor="{StaticResource Primary}"/>
+                            <Picker x:Name="quantidadePicker" SelectedItem="{Binding Quantidade}"  Grid.Row="1" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+                            <Button Text="Refresh" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center"
+                                Command="{Binding ViewAllLogCommand}"/>
+                            <Button Text="{Binding TextBackgroundServiceLog}" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center"
+                                Command="{Binding EnableBackgroundServiceLogCommand}"/>
+                        </Grid>
+
+                        <ScrollView Grid.Row="1" >
+                            <VerticalStackLayout >
+                                <Grid ColumnDefinitions="10*,10*,10*,10*,10*,10*,10*,10*,10*" RowDefinitions="30,*">
+
+                                    <Label Text="NumReg" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="EventType" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="Objecto" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="Valor" Grid.Column="3" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="Referencia" Grid.Column="4" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="UserID" Grid.Column="5" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="TerminalD" Grid.Column="6" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="TerminalName" Grid.Column="7" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                    <Label Text="DCriacao" Grid.Column="8" HorizontalOptions="Start" VerticalOptions="Center"  />
+
+                                    <Label Text="" Grid.Column="4" HorizontalOptions="Start" VerticalOptions="Center"  />
+
+                                    <BoxView Style="{StaticResource HRule}" Margin="0,30,0,0" Grid.ColumnSpan="9"/>
+
+                                </Grid>
+                            </VerticalStackLayout>
+                        </ScrollView>
+
+
+                        <ScrollView Grid.Row="3" Margin="0,30,0,0">
+                            <VerticalStackLayout Spacing="16" Margin="0,30,0,0"
+                                                 BindableLayout.ItemsSource="{Binding LogList.ItemsLog}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="m:Log">
+
+                                        <Grid Margin="5,0,0,0" ColumnDefinitions="10*,10*,10*,10*,10*,10*,10*,10*,10*" RowDefinitions="*">
+                                            <Label Text="{Binding NumReg}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding EventType}" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding Objecto}" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding Valor}" Grid.Column="3" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding Referencia}" Grid.Column="4" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding UserID}" Grid.Column="5" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding TerminalD}" Grid.Column="6" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding TerminalName}" Grid.Column="7" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                            <Label Text="{Binding DCriacao}" Grid.Column="8" HorizontalOptions="Start" VerticalOptions="Center"  />
+                                        </Grid>
+
+                                    </DataTemplate>
+
+
+
+                                </BindableLayout.ItemTemplate>
+
+                            </VerticalStackLayout>
+
+                        </ScrollView>
+
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+        </ScrollView>
+    </Grid>
+</ContentPage>
+
